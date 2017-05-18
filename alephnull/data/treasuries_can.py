@@ -84,7 +84,7 @@ def get_treasury_source(start_date=None, end_date=None):
 
     bill_row = ""
     while ",".join(BILLS) not in bill_row:
-        bill_row = bill_iter.next()
+        bill_row = next(bill_iter)
         if 'Daily series:' in bill_row:
             bill_end_date = datetime.datetime.strptime(
                 bill_row.split(' - ')[1].strip(),
@@ -93,7 +93,7 @@ def get_treasury_source(start_date=None, end_date=None):
 
     bond_row = ""
     while ",".join(BONDS) not in bond_row:
-        bond_row = bond_iter.next()
+        bond_row = next(bond_iter)
         if 'Daily series:' in bond_row:
             bond_end_date = datetime.datetime.strptime(
                 bond_row.split(' - ')[1].strip(),
@@ -102,14 +102,14 @@ def get_treasury_source(start_date=None, end_date=None):
 
     #Line up the two dates
     if bill_end_date > bond_end_date:
-        bill_iter.next()
+        next(bill_iter)
     elif bond_end_date > bill_end_date:
-        bond_iter.next()
+        next(bond_iter)
 
     for bill_row in bill_iter:
-        bond_row = bond_iter.next()
-        bill_dict = dict(zip(bill_header, bill_row.split(",")))
-        bond_dict = dict(zip(bond_header, bond_row.split(",")))
+        bond_row = next(bond_iter)
+        bill_dict = dict(list(zip(bill_header, bill_row.split(","))))
+        bond_dict = dict(list(zip(bond_header, bond_row.split(","))))
         if ' Bank holiday' in bond_row.split(",") + bill_row.split(","):
             continue
         if ' Not available' in bond_row.split(",") + bill_row.split(","):

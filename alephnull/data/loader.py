@@ -160,10 +160,10 @@ def load_market_data(bm_symbol='^GSPC'):
     try:
         fp_bm = get_datafile(get_benchmark_filename(bm_symbol), "rb")
     except IOError:
-        print("""
+        print(("""
 data files aren't distributed with source.
 Fetching data from Yahoo Finance.
-""").strip()
+""").strip())
         dump_benchmarks(bm_symbol)
         fp_bm = get_datafile(get_benchmark_filename(bm_symbol), "rb")
 
@@ -208,10 +208,10 @@ Fetching data from Yahoo Finance.
     try:
         fp_tr = get_datafile(filename, "rb")
     except IOError:
-        print("""
+        print(("""
 data files aren't distributed with source.
 Fetching data from {0}
-""").format(source).strip()
+""").format(source).strip())
         dump_treasury_curves(module, filename)
         fp_tr = get_datafile(filename, "rb")
 
@@ -239,7 +239,7 @@ Fetching data from {0}
     fp_tr.close()
 
     tr_curves = OrderedDict(sorted(
-        ((dt, c) for dt, c in tr_curves.iteritems()),
+        ((dt, c) for dt, c in tr_curves.items()),
         key=lambda t: t[0]))
 
     return benchmark_returns, tr_curves
@@ -290,7 +290,7 @@ must specify stocks or indexes"""
             data[stock] = stkd
 
     if indexes is not None:
-        for name, ticker in indexes.iteritems():
+        for name, ticker in indexes.items():
             stkd = DataReader(ticker, 'yahoo', start, end).sort_index()
             data[name] = stkd
 
@@ -329,7 +329,7 @@ def load_from_yahoo(indexes=None,
         close_key = 'Adj Close'
     else:
         close_key = 'Close'
-    df = pd.DataFrame({key: d[close_key] for key, d in data.iteritems()})
+    df = pd.DataFrame({key: d[close_key] for key, d in data.items()})
     df.index = df.index.tz_localize(pytz.utc)
     return df
 

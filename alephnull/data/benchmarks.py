@@ -50,7 +50,7 @@ _BENCHMARK_MAPPING = {
 def benchmark_mappings():
     return {key: Mapping(*value)
             for key, value
-            in _BENCHMARK_MAPPING.iteritems()}
+            in _BENCHMARK_MAPPING.items()}
 
 
 def get_raw_benchmark_data(start_date, end_date, symbol):

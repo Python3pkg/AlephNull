@@ -70,7 +70,7 @@ class FuturesDataFrameSource(DataSource):
                     if sid not in events:
                         events[sid] = {'dt': dt, 'sid': sid}
                     events[sid][metric] = value
-            for event in events.itervalues():
+            for event in events.values():
                 yield event
 
     @property

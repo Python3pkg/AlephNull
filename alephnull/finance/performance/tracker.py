@@ -57,7 +57,7 @@ Performance Tracking
 
 """
 
-from __future__ import division
+
 import logbook
 
 import pandas as pd

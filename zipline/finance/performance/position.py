@@ -32,7 +32,7 @@ Position Tracking
 
 """
 
-from __future__ import division
+
 import logbook
 import math
 

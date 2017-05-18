@@ -50,7 +50,7 @@ class RollingPanel(object):
 
     def _create_buffer(self):
         return pd.Panel(items=self.items, minor_axis=self.minor_axis,
-                        major_axis=range(self.cap),
+                        major_axis=list(range(self.cap)),
                         dtype=self.dtype)
 
     def _update_buffer(self, frame):

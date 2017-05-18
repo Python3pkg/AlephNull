@@ -61,7 +61,7 @@ _CURVE_MAPPINGS = {
 def treasury_mappings(mappings):
     return {key: Mapping(*value)
             for key, value
-            in mappings.iteritems()}
+            in mappings.items()}
 
 
 class iter_to_stream(object):

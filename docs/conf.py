@@ -46,8 +46,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Zipline'
-copyright = u'2012, Quantopian: jean, fawce, sdiehl'
+project = 'Zipline'
+copyright = '2012, Quantopian: jean, fawce, sdiehl'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -189,8 +189,8 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'QSim.tex', u'QSim Documentation',
-   u'Quantopian: jean, fawce, sdiehl', 'manual'),
+  ('index', 'QSim.tex', 'QSim Documentation',
+   'Quantopian: jean, fawce, sdiehl', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -219,8 +219,8 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'zipline', u'QSim Documentation',
-     [u'Quantopian: jean, fawce, sdiehl'], 1)
+    ('index', 'zipline', 'QSim Documentation',
+     ['Quantopian: jean, fawce, sdiehl'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -233,8 +233,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'QSim', u'QSim Documentation',
-   u'Quantopian: jean, fawce, sdiehl', 'QSim', 'One line description of project.',
+  ('index', 'QSim', 'QSim Documentation',
+   'Quantopian: jean, fawce, sdiehl', 'QSim', 'One line description of project.',
    'Miscellaneous'),
 ]
 

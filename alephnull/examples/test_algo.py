@@ -37,15 +37,15 @@ month = lambda x: np.random.choice([abc for abc in x],
 
 contracts = np.ravel([[(''.join(month(string.letters[:26])) +
                         str(np.random.choice([14, 15, 16])))] * len(cols)
-                      for x in xrange(len(source.columns) / len(cols) / 2)])
+                      for x in range(len(source.columns) / len(cols) / 2)])
 
 level_1 = len(source.columns) / len(contracts) * list(contracts)
 
 numsyms = len(source.columns) / (len(set(level_1)) * len(cols))
-underlyings = [''.join(sym(string.letters[:26])) for x in xrange(numsyms)]
+underlyings = [''.join(sym(string.letters[:26])) for x in range(numsyms)]
 level_0 = np.ravel([[sym] * len(set(level_1)) * len(cols) for sym in underlyings])
 
-source.columns = pd.MultiIndex.from_tuples(zip(level_0, level_1, source.columns))
+source.columns = pd.MultiIndex.from_tuples(list(zip(level_0, level_1, source.columns)))
 source.index = pd.date_range(start=dt.datetime.utcnow() - dt.timedelta(days=len(source.index) - 1),
                              end=dt.datetime.utcnow(), freq='D')
 
@@ -55,7 +55,7 @@ futdata = FuturesDataFrameSource(source.tz_localize('UTC'))
 class FrontTrader(TradingAlgorithm):
     @roll(lambda x: x[x['open_interest'] == x['open_interest'].max()])
     def handle_data(self, data):
-        for sym in data.keys():
+        for sym in list(data.keys()):
             self.order((sym, data[sym]['contract']), 2)
         return data
 

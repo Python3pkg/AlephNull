@@ -19,19 +19,18 @@ from alephnull.transforms.utils import EventWindow, TransformMeta
 from alephnull.errors import WrongDataForTransform
 
 
-class MovingAverage(object):
+class MovingAverage(object, metaclass=TransformMeta):
     """
     Class that maintains a dictionary from sids to
     MovingAverageEventWindows.  For each sid, we maintain moving
     averages over any number of distinct fields (For example, we can
     maintain a sid's average volume as well as its average price.)
     """
-    __metaclass__ = TransformMeta
 
     def __init__(self, fields='price',
                  market_aware=True, window_length=None, delta=None):
 
-        if isinstance(fields, basestring):
+        if isinstance(fields, str):
             fields = [fields]
         self.fields = fields
 

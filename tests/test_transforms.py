@@ -64,7 +64,7 @@ class TestEventWindow(TestCase):
 
         self.monday = datetime(2012, 7, 9, 16, tzinfo=pytz.utc)
         self.eleven_normal_days = [self.monday + i * timedelta(days=1)
-                                   for i in xrange(11)]
+                                   for i in range(11)]
 
         # Modify the end of the period slightly to exercise the
         # incomplete day logic.
@@ -75,7 +75,7 @@ class TestEventWindow(TestCase):
         # Second set of dates to test holiday handling.
         self.jul4_monday = datetime(2012, 7, 2, 16, tzinfo=pytz.utc)
         self.week_of_jul4 = [self.jul4_monday + i * timedelta(days=1)
-                             for i in xrange(5)]
+                             for i in range(5)]
 
     def test_market_aware_window_normal_week(self):
         window = NoopEventWindow(
@@ -300,7 +300,7 @@ class TestTALIB(TestCase):
                  and n not in BLACKLIST]
 
         for name in names:
-            print name
+            print(name)
             zipline_transform = getattr(ta, name)(sid=0)
             talib_fn = getattr(talib.abstract, name)
 
@@ -337,7 +337,7 @@ class TestTALIB(TestCase):
                     and np.all(np.isnan(expected_result))):
                 self.assertTrue(np.allclose(zipline_result, expected_result))
             else:
-                print '--- NAN'
+                print('--- NAN')
 
             # reset generator so next iteration has data
             # self.source, self.panel = \

@@ -14,7 +14,7 @@
 # limitations under the License.
 from copy import copy
 from datetime import datetime
-from itertools import groupby, ifilter
+from itertools import groupby
 from operator import attrgetter
 
 import pytz
@@ -197,7 +197,7 @@ class TradingAlgorithm(object):
                    recorded_vars=repr(self.recorded_vars))
 
     def _init_positions(self):
-        for sid, pos in self._portfolio.positions.iteritems():
+        for sid, pos in self._portfolio.positions.items():
             for perf_period in self.perf_tracker.perf_periods:
                 perf_period.update_position(
                     sid=sid,
@@ -234,7 +234,7 @@ class TradingAlgorithm(object):
         date_sorted = date_sorted_sources(*self.sources)
 
         if source_filter:
-            date_sorted = ifilter(source_filter, date_sorted)
+            date_sorted = filter(source_filter, date_sorted)
 
         with_tnfms = sequential_transforms(date_sorted,
                                            *self.transforms)
@@ -353,7 +353,7 @@ class TradingAlgorithm(object):
 
         # Create transforms by wrapping them into StatefulTransforms
         self.transforms = []
-        for namestring, trans_descr in self.registered_transforms.iteritems():
+        for namestring, trans_descr in self.registered_transforms.items():
             sf = StatefulTransform(
                 trans_descr['class'],
                 *trans_descr['args'],
@@ -421,7 +421,7 @@ class TradingAlgorithm(object):
         """
         Track and record local variable (i.e. attributes) each day.
         """
-        for name, value in kwargs.items():
+        for name, value in list(kwargs.items()):
             self._recorded_vars[name] = value
 
     def order(self, sid, amount, limit_price=None, stop_price=None):
@@ -443,7 +443,7 @@ class TradingAlgorithm(object):
         if sid is None:
             return {key: [order.to_api_obj() for order in orders]
                     for key, orders
-                    in self.blotter.open_orders.iteritems()}
+                    in self.blotter.open_orders.items()}
         if sid in self.blotter.open_orders:
             orders = self.blotter.open_orders[sid]
             return [order.to_api_obj() for order in orders]
@@ -456,8 +456,8 @@ class TradingAlgorithm(object):
         orders = {id_: {(self.blotter.orders[id_].__dict__['sid'],
                          self.blotter.orders[id_].__dict__['contract']):
                             self.blotter.orders[id_].__dict__} for id_ in
-                  self.blotter.orders.keys()}
-        orders = [{sym: {key: v} for sym, v in orders[key].iteritems()} for key in orders.keys()]
+                  list(self.blotter.orders.keys())}
+        orders = [{sym: {key: v} for sym, v in orders[key].items()} for key in list(orders.keys())]
         orders_flat = {}
         for d in orders:
             orders_flat.update(d)

@@ -51,7 +51,7 @@ BAR_RANGE = LESS_BAR_RANGE
 CONTRACT_OUT_LIMIT = LESS_CONTRACT_OUT_LIMIT
 STEP = LESS_STEP
 
-CONTRACT_COUNT = sum([sum([1 for m in month_list]) for month_list in [x for x in ACCEPTABLE_SYMBOLS.itervalues()]])
+CONTRACT_COUNT = sum([sum([1 for m in month_list]) for month_list in [x for x in ACCEPTABLE_SYMBOLS.values()]])
 
 
 
@@ -68,7 +68,7 @@ class PrevIterator(object):
     def __iter__(self):
         return self
     
-    def next(self):
+    def __next__(self):
         self.last_element = self.current_element
         self.current_element = next(self.iterator)
         return self.current_element
@@ -78,7 +78,7 @@ class PrevIterator(object):
 
 
 def lazy_contracts():
-    for symbol, months in ACCEPTABLE_SYMBOLS.iteritems():
+    for symbol, months in ACCEPTABLE_SYMBOLS.items():
         for month in list(months):
             for year in range(datetime.date.today().year, CONTRACT_OUT_LIMIT + 1):
                 short_year = year - 2000
@@ -159,12 +159,12 @@ def create_dummy_universe_dict():
 def dataframe_from_universe_dict(universe_dict):
     timestamps = []
     outer_frames = []
-    for timestamp, hl_ticker_dict in universe_dict.iteritems():
+    for timestamp, hl_ticker_dict in universe_dict.items():
         timestamps.append(timestamp)
         
         inner_frames = []
         hl_tickers = []
-        for hl_ticker, low_level_ticker_dict in hl_ticker_dict.iteritems():
+        for hl_ticker, low_level_ticker_dict in hl_ticker_dict.items():
             hl_tickers.append(hl_ticker)
             inner_frames.append(DataFrame.from_dict(low_level_ticker_dict, orient='index'))
         hl_ticker_frame = pd.concat(inner_frames, keys=hl_tickers)

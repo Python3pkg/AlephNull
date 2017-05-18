@@ -58,7 +58,7 @@ class TestRecordAlgorithm(TestCase):
         output = algo.run(self.source)
 
         np.testing.assert_array_equal(output['incr'].values,
-                                      range(1, len(output) + 1))
+                                      list(range(1, len(output) + 1)))
 
 
 class TestTransformAlgorithm(TestCase):

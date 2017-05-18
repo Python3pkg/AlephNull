@@ -49,7 +49,7 @@ class Event(object):
         delattr(self, name)
 
     def keys(self):
-        return self.__dict__.keys()
+        return list(self.__dict__.keys())
 
     def __eq__(self, other):
         return self.__dict__ == other.__dict__
@@ -177,7 +177,7 @@ class BarData(object):
         del self._data[name]
 
     def __iter__(self):
-        for sid, data in self._data.iteritems():
+        for sid, data in self._data.items():
             # Allow contains override to filter out sids.
             if sid in self:
                 if len(data):
@@ -185,25 +185,25 @@ class BarData(object):
 
     def iterkeys(self):
         # Allow contains override to filter out sids.
-        return (sid for sid in self._data.iterkeys() if sid in self)
+        return (sid for sid in self._data.keys() if sid in self)
 
     def keys(self):
         # Allow contains override to filter out sids.
-        return list(self.iterkeys())
+        return list(self.keys())
 
     def itervalues(self):
-        return (value for sid, value in self.iteritems())
+        return (value for sid, value in self.items())
 
     def values(self):
-        return list(self.itervalues())
+        return list(self.values())
 
     def iteritems(self):
         return ((sid, value) for sid, value
-                in self._data.iteritems()
+                in self._data.items()
                 if sid in self)
 
     def items(self):
-        return list(self.iteritems())
+        return list(self.items())
 
     def __len__(self):
-        return len(self.keys())
+        return len(list(self.keys()))

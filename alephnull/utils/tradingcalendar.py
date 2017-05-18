@@ -283,7 +283,7 @@ def get_early_closes(start, end):
         # 4th Friday isn't correct if month starts on Friday, so restrict to
         # day range:
         byweekday=(rrule.FR),
-        bymonthday=range(23, 30),
+        bymonthday=list(range(23, 30)),
         cache=True,
         dtstart=start,
         until=end
@@ -397,7 +397,7 @@ def get_open_and_closes(trading_days, early_closes):
     get_o_and_c = partial(get_open_and_close, early_closes=early_closes)
 
     open_and_closes['market_open'], open_and_closes['market_close'] = \
-        zip(*open_and_closes.index.map(get_o_and_c))
+        list(zip(*open_and_closes.index.map(get_o_and_c)))
 
     return open_and_closes
 

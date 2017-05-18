@@ -61,8 +61,8 @@ class TestRollingPanel(unittest.TestCase):
 
 
 def f(option='clever', n=500, copy=False):
-    items = range(5)
-    minor = range(20)
+    items = list(range(5))
+    minor = list(range(20))
     window = 100
     periods = n
 

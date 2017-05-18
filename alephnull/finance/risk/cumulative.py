@@ -359,7 +359,7 @@ algorithm_returns ({algo_count}) in range {start} : {end} on {dt}"
 
         return {k: None
                 if check_entry(k, v)
-                else v for k, v in rval.iteritems()}
+                else v for k, v in rval.items()}
 
     def __repr__(self):
         statements = []

@@ -137,7 +137,7 @@ class SlippageTestCase(TestCase):
 
         self.assertIsNotNone(txn)
 
-        for key, value in expected_txn.items():
+        for key, value in list(expected_txn.items()):
             self.assertEquals(value, txn[key])
 
         # short, does not trade
@@ -189,7 +189,7 @@ class SlippageTestCase(TestCase):
 
         self.assertIsNotNone(txn)
 
-        for key, value in expected_txn.items():
+        for key, value in list(expected_txn.items()):
             self.assertEquals(value, txn[key])
 
     STOP_ORDER_CASES = {
@@ -320,7 +320,7 @@ class SlippageTestCase(TestCase):
 
     @parameterized.expand([
         (name, case['order'], case['event'], case['expected'])
-        for name, case in STOP_ORDER_CASES.items()
+        for name, case in list(STOP_ORDER_CASES.items())
     ])
     def test_orders_stop(self, name, order_data, event_data, expected):
         order = Order(**order_data)
@@ -329,7 +329,7 @@ class SlippageTestCase(TestCase):
         slippage_model = VolumeShareSlippage()
 
         try:
-            _, txn = slippage_model.simulate(event, [order]).next()
+            _, txn = next(slippage_model.simulate(event, [order]))
         except StopIteration:
             txn = None
 
@@ -338,7 +338,7 @@ class SlippageTestCase(TestCase):
         else:
             self.assertIsNotNone(txn)
 
-            for key, value in expected['transaction'].items():
+            for key, value in list(expected['transaction'].items()):
                 self.assertEquals(value, txn[key])
 
     def test_orders_stop_limit(self):
@@ -407,7 +407,7 @@ class SlippageTestCase(TestCase):
             'sid': int(133)
         }
 
-        for key, value in expected_txn.items():
+        for key, value in list(expected_txn.items()):
             self.assertEquals(value, txn[key])
 
         # short, does not trade
@@ -471,7 +471,7 @@ class SlippageTestCase(TestCase):
             'sid': int(133)
         }
 
-        for key, value in expected_txn.items():
+        for key, value in list(expected_txn.items()):
             self.assertEquals(value, txn[key])
 
     def gen_trades(self):

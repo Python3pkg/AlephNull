@@ -7,9 +7,7 @@ from alephnull.protocol import DATASOURCE_TYPE
 from alephnull.protocol import Event
 
 
-class DataSource(object):
-
-    __metaclass__ = ABCMeta
+class DataSource(object, metaclass=ABCMeta):
 
     @property
     def event_type(self):
@@ -47,7 +45,7 @@ class DataSource(object):
         """
         row = {target: mapping_func(raw_row[source_key])
                for target, (mapping_func, source_key)
-               in self.mapping.items()}
+               in list(self.mapping.items())}
         row.update({'source_id': self.get_hash()})
         row.update({'type': self.event_type})
         return row
@@ -60,5 +58,5 @@ class DataSource(object):
     def __iter__(self):
         return self
 
-    def next(self):
-        return self.mapped_data.next()
+    def __next__(self):
+        return next(self.mapped_data)

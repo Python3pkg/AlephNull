@@ -258,10 +258,10 @@ class AnswerKey(object):
             'Sim Cumulative')
         self.sheets['s_p'] = self.workbook.sheet_by_name('s_p')
 
-        for name, index in self.INDEXES.items():
+        for name, index in list(self.INDEXES.items()):
             if isinstance(index, dict):
                 subvalues = {}
-                for subkey, subindex in index.items():
+                for subkey, subindex in list(index.items()):
                     subvalues[subkey] = self.get_values(subindex)
                 setattr(self, name, subvalues)
             else:
@@ -288,7 +288,7 @@ class AnswerKey(object):
 
     def get_values(self, data_index):
         value_parser = self.value_type_to_value_func[data_index.value_type]
-        return map(value_parser, self.get_raw_values(data_index))
+        return list(map(value_parser, self.get_raw_values(data_index)))
 
 
 ANSWER_KEY = AnswerKey()
@@ -296,24 +296,24 @@ ANSWER_KEY = AnswerKey()
 BENCHMARK_DATES = ANSWER_KEY.BENCHMARK['Dates']
 BENCHMARK_RETURNS = ANSWER_KEY.BENCHMARK['Returns']
 DATES = [datetime.datetime(*x, tzinfo=pytz.UTC) for x in BENCHMARK_DATES]
-BENCHMARK = pd.Series(dict(zip(DATES, BENCHMARK_RETURNS)))
+BENCHMARK = pd.Series(dict(list(zip(DATES, BENCHMARK_RETURNS))))
 ALGORITHM_RETURNS = pd.Series(
-    dict(zip(DATES, ANSWER_KEY.ALGORITHM_RETURN_VALUES)))
+    dict(list(zip(DATES, ANSWER_KEY.ALGORITHM_RETURN_VALUES))))
 RETURNS_DATA = pd.DataFrame({'Benchmark Returns': BENCHMARK,
                              'Algorithm Returns': ALGORITHM_RETURNS})
 RISK_CUMULATIVE = pd.DataFrame({
-    'volatility': pd.Series(dict(zip(
-        DATES, ANSWER_KEY.ALGORITHM_CUMULATIVE_VOLATILITY))),
-    'sharpe': pd.Series(dict(zip(
-        DATES, ANSWER_KEY.ALGORITHM_CUMULATIVE_SHARPE))),
-    'downside_risk': pd.Series(dict(zip(
-        DATES, ANSWER_KEY.CUMULATIVE_DOWNSIDE_RISK))),
-    'sortino': pd.Series(dict(zip(
-        DATES, ANSWER_KEY.CUMULATIVE_SORTINO))),
-    'information': pd.Series(dict(zip(
-        DATES, ANSWER_KEY.CUMULATIVE_INFORMATION))),
-    'alpha': pd.Series(dict(zip(
-        DATES, ANSWER_KEY.CUMULATIVE_ALPHA))),
-    'beta': pd.Series(dict(zip(
-        DATES, ANSWER_KEY.CUMULATIVE_BETA))),
+    'volatility': pd.Series(dict(list(zip(
+        DATES, ANSWER_KEY.ALGORITHM_CUMULATIVE_VOLATILITY)))),
+    'sharpe': pd.Series(dict(list(zip(
+        DATES, ANSWER_KEY.ALGORITHM_CUMULATIVE_SHARPE)))),
+    'downside_risk': pd.Series(dict(list(zip(
+        DATES, ANSWER_KEY.CUMULATIVE_DOWNSIDE_RISK)))),
+    'sortino': pd.Series(dict(list(zip(
+        DATES, ANSWER_KEY.CUMULATIVE_SORTINO)))),
+    'information': pd.Series(dict(list(zip(
+        DATES, ANSWER_KEY.CUMULATIVE_INFORMATION)))),
+    'alpha': pd.Series(dict(list(zip(
+        DATES, ANSWER_KEY.CUMULATIVE_ALPHA)))),
+    'beta': pd.Series(dict(list(zip(
+        DATES, ANSWER_KEY.CUMULATIVE_BETA)))),
 })

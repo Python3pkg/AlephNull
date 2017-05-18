@@ -126,7 +126,7 @@ def _row_cb(mapping, row):
     return {
         target: apply_mapping(mapping, row)
         for target, mapping
-        in mapping.iteritems()
+        in mapping.items()
     }
 
 

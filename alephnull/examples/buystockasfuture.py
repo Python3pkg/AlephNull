@@ -62,7 +62,7 @@ class BuyStock(TradingAlgorithm):
             initial_quantity = 50
             self.order(SYMBOL, initial_quantity)
             position.margin += initial_margin * initial_quantity
-            print(position.margin)
+            print((position.margin))
             self._first_pass = False
             self.last_price = price
             return
@@ -73,7 +73,7 @@ class BuyStock(TradingAlgorithm):
         quantity_owned = position.amount
         margin = position.margin
         # don't ask...
-        timestamp = next(data[0].iteritems() if type(data) is list else data.iteritems())[1]['datetime']
+        timestamp = next(iter(data[0].items()) if type(data) is list else iter(data.items()))[1]['datetime']
 
         TRACK.append((margin, quantity_owned, timestamp))
         if maintenance_margin * quantity_owned > margin:

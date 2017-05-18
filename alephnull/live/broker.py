@@ -120,7 +120,7 @@ class LiveBlotter(Blotter):
             if order.amount - order.filled == 0:
                 order.status = ORDER_STATUS.FILLED
             order.dt = txn.dt
-            print txn.__dict__
+            print(txn.__dict__)
             yield txn, order
 
         self.open_orders[sid] = \

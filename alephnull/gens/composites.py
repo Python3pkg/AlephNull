@@ -14,6 +14,7 @@
 # limitations under the License.
 
 import heapq
+from functools import reduce
 
 
 def _decorate_source(source):

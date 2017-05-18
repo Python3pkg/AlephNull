@@ -92,7 +92,7 @@ class StatefulTransform(object):
     Otherwise only dt, tnfm_id, and tnfm_value are forwarded.
     """
     def __init__(self, tnfm_class, *args, **kwargs):
-        assert isinstance(tnfm_class, (types.ObjectType, types.ClassType)), \
+        assert isinstance(tnfm_class, (object, type)), \
             "Stateful transform requires a class."
         assert hasattr(tnfm_class, 'update'), \
             "Stateful transform requires the class to have an update method"
@@ -150,7 +150,7 @@ class StatefulTransform(object):
             yield out_message
 
 
-class EventWindow(object):
+class EventWindow(object, metaclass=ABCMeta):
     """
     Abstract base class for transform classes that calculate iterative
     metrics on events within a given timedelta.  Maintains a list of
@@ -168,8 +168,6 @@ class EventWindow(object):
     implementations of moving average and volume-weighted average
     price.
     """
-    # Mark this as an abstract base class.
-    __metaclass__ = ABCMeta
 
     def __init__(self, market_aware=True, window_length=None, delta=None):
 

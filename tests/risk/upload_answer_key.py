@@ -50,8 +50,8 @@ def main():
         bucket_name=BUCKET_NAME,
         key=key.key)
 
-    print("Uploaded to key: {key}".format(key=key.key))
-    print("Download link: {download_link}".format(download_link=download_link))
+    print(("Uploaded to key: {key}".format(key=key.key)))
+    print(("Download link: {download_link}".format(download_link=download_link)))
 
     # Now update checksum file with the recently added answer key.
     # checksum file update will be then need to be commited via git.

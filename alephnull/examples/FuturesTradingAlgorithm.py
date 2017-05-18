@@ -43,7 +43,7 @@ class FuturesTradingAlgorithm(TradingAlgorithm):
         # Ideally we would use SPAN margining; however, based on some naive data analysis,
         # the max a stock changes in a several day period (up to 30 days) is about 42%.
         # Change this when you have a better strategy!
-        for symbol, measures in data.iteritems():
+        for symbol, measures in data.items():
             initial_margin = measures['price'] * 0.42
             maintenance_margin = measures['price'] * 0.32
             measures.__dict__.update({'initial_margin': initial_margin})
@@ -62,7 +62,7 @@ class FuturesTradingAlgorithm(TradingAlgorithm):
         self.total_maintenance_margin = 0
 
         # update margin account
-        for symbol, measures in data.iteritems():
+        for symbol, measures in data.items():
             position = self.perf_tracker.cumulative_performance.positions[symbol]
             last_price = self.last_prices.get(symbol)
             price = measures['price']
@@ -71,7 +71,7 @@ class FuturesTradingAlgorithm(TradingAlgorithm):
             self.last_prices[symbol] = price
             self.total_maintenance_margin += measures['maintenance_margin']
 
-        timestamp = next(data[0].iteritems() if type(data) is list else data.iteritems())[1]['datetime']
+        timestamp = next(iter(data[0].items()) if type(data) is list else iter(data.items()))[1]['datetime']
 
         self._margin_account_log[timestamp] = self.margin_account_value
 
@@ -106,7 +106,7 @@ class FuturesTradingAlgorithm(TradingAlgorithm):
         """Liquidate an entire position (the position in particular is chosen at random) until we are back above
         maintenance margin."""
         while self.margin_account_value < self.total_maintenance_margin:
-            positions_as_list = self.perf_tracker.cumulative_performance.positions.items()[:]
+            positions_as_list = list(self.perf_tracker.cumulative_performance.positions.items())[:]
             chosen_symbol, chosen_position = positions_as_list[random.randint(0, len(positions_as_list) - 1)]
             TradingAlgorithm.order(self, chosen_symbol, chosen_position.amount)
             positions_as_list.remove((chosen_symbol, chosen_position))

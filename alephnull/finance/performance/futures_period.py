@@ -1,4 +1,4 @@
-from __future__ import division
+
 import math
 from collections import OrderedDict, defaultdict
 
@@ -97,7 +97,7 @@ class FuturesPerformancePeriod(object):
         payment has been disbursed.
         """
         cash_payments = 0.0
-        for sid, pos in self.positions.iteritems():
+        for sid, pos in self.positions.items():
             cash_payments += pos.update_dividends(todays_date)
 
         # credit our cash balance with the dividend payments, or
@@ -206,7 +206,7 @@ class FuturesPerformancePeriod(object):
         return int(base * round(float(x) / base))
 
     def calculate_positions_value(self):
-        multipliers = [get_multiplier(symbol) for symbol in self._position_amounts.keys()]
+        multipliers = [get_multiplier(symbol) for symbol in list(self._position_amounts.keys())]
         result = 0
         for amount, price, multiplier in zip(self._position_amounts, self._position_last_sale_prices, multipliers):
             result += amount * price * multiplier
@@ -271,7 +271,7 @@ class FuturesPerformancePeriod(object):
             else:
                 transactions = \
                     [y.to_dict()
-                     for x in self.processed_transactions.itervalues()
+                     for x in self.processed_transactions.values()
                      for y in x]
             rval['transactions'] = transactions
 
@@ -279,9 +279,9 @@ class FuturesPerformancePeriod(object):
             if dt:
                 # only include orders modified as of the given dt.
                 orders = [x.to_dict()
-                          for x in self.orders_by_modified[dt].itervalues()]
+                          for x in self.orders_by_modified[dt].values()]
             else:
-                orders = [x.to_dict() for x in self.orders_by_id.itervalues()]
+                orders = [x.to_dict() for x in self.orders_by_id.values()]
             rval['orders'] = orders
 
         return rval
@@ -315,7 +315,7 @@ class FuturesPerformancePeriod(object):
     def get_positions(self):
         positions = self._positions_store
 
-        for sid, pos in self.positions.iteritems():
+        for sid, pos in self.positions.items():
 
             if sid not in positions:
                 if type(sid) is tuple:
@@ -331,7 +331,7 @@ class FuturesPerformancePeriod(object):
 
     def get_positions_list(self):
         positions = []
-        for sid, pos in self.positions.iteritems():
+        for sid, pos in self.positions.items():
             if pos.amount != 0:
                 positions.append(pos.to_dict())
         return positions

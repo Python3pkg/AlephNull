@@ -142,7 +142,7 @@ class DataPanelSource(DataSource):
                         'dt': dt,
                         'sid': sid,
                     }
-                    for field_name, value in series.iteritems():
+                    for field_name, value in series.items():
                         event[field_name] = value
 
                     yield event

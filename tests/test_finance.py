@@ -314,7 +314,7 @@ class FinanceTestCase(TestCase):
             alternator = 1
 
         order_date = start_date
-        for i in xrange(order_count):
+        for i in range(order_count):
 
             blotter.set_date(order_date)
             blotter.order(sid, order_amount * alternator ** i, None, None)
@@ -334,7 +334,7 @@ class FinanceTestCase(TestCase):
         order_list = oo[sid]
         self.assertEqual(order_count, len(order_list))
 
-        for i in xrange(order_count):
+        for i in range(order_count):
             order = order_list[i]
             self.assertEqual(order.sid, sid)
             self.assertEqual(order.amount, order_amount * alternator ** i)
@@ -372,7 +372,7 @@ class FinanceTestCase(TestCase):
             self.assertEqual(len(transactions), len(order_list))
 
         total_volume = 0
-        for i in xrange(len(transactions)):
+        for i in range(len(transactions)):
             txn = transactions[i]
             total_volume += txn.amount
             if complete_fill:

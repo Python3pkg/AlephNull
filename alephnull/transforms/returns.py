@@ -18,12 +18,11 @@ from alephnull.transforms.utils import TransformMeta
 from collections import defaultdict, deque
 
 
-class Returns(object):
+class Returns(object, metaclass=TransformMeta):
     """
     Class that maintains a dictionary from sids to the sid's
     closing price N trading days ago.
     """
-    __metaclass__ = TransformMeta
 
     def __init__(self, window_length):
         self.window_length = window_length

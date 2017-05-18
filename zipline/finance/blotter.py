@@ -176,9 +176,7 @@ class Blotter(object):
         orders = self.open_orders[trade_event.sid]
         orders = sorted(orders, key=lambda o: o.dt)
         # Only use orders for the current day or before
-        current_orders = filter(
-            lambda o: o.dt <= trade_event.dt,
-            orders)
+        current_orders = [o for o in orders if o.dt <= trade_event.dt]
 
         for order, txn in self.process_transactions(trade_event,
                                                     current_orders):

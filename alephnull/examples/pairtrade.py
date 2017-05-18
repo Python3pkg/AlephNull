@@ -133,4 +133,4 @@ if __name__ == '__main__':
 	plt.ylabel('zscored spread')
 
 	plt.show()
-	raw_input()
+	input()

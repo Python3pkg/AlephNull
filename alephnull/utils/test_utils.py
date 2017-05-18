@@ -57,7 +57,7 @@ def assert_single_position(test, zipline):
                 for order in update['daily_perf']['orders']:
                     orders_by_id[order['id']] = order
 
-    for order in orders_by_id.itervalues():
+    for order in orders_by_id.values():
         test.assertEqual(
             order['status'],
             ORDER_STATUS.FILLED,
@@ -90,7 +90,7 @@ class ExceptionSource(object):
     def __iter__(self):
         return self
 
-    def next(self):
+    def __next__(self):
         5 / 0
 
 

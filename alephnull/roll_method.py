@@ -9,9 +9,9 @@ def roll(logic):
         def modified_func(self, data):
             positions = self.portfolio.positions
             frames = {}
-            for sym in data.keys():
+            for sym in list(data.keys()):
                 frames[sym] = DataFrame({k: Series(v.__dict__) for
-                                         k, v in data[sym].iteritems()})
+                                         k, v in data[sym].items()})
 
             all_ = pd.concat(frames, axis=1).T
             try:
@@ -44,7 +44,7 @@ def roll(logic):
                     [self.order(exp, stack) for exp in front_months if exp[0] == sym[0]]
 
             bar_data = BarData()
-            bar_data.__dict__['_data'].update({k: SIDData(v) for k, v in data.iteritems()})
+            bar_data.__dict__['_data'].update({k: SIDData(v) for k, v in data.items()})
 
             return func(self, bar_data)
 
